@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  hedgedoc:
+    image: quay.io/hedgedoc/hedgedoc:${HEDGEDOC_VERSION:-latest}
+    restart: unless-stopped
+    env_file: .env
+    user: ${USER_UID:-1000}:${USER_GID:-1000}
+    volumes:
+      - ${HEDGEDOC_APP_ROOT:-/opt/persistent-storage/hedgedoc/app}/uploads:/hedgedoc/public/uploads
+    networks:
+      - hedgedoc
+    ports:
+      - ${HEDGEDOC_HTTP_PORT:-3000}:3000
+    depends_on:
+      - postgres
+  postgres:
+    image: ${POSTGRES_IMAGE:-postgres}:${POSTGRES_VERSION:-14}
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ${POSTGRES_APP_ROOT:-/opt/persistent-storage/hedgedoc/postgres}:/var/lib/postgresql/data
+    networks:
+      - hedgedoc
+
+networks:
+  hedgedoc:
