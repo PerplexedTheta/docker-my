@@ -1,18 +1,22 @@
 version: '3'
 
 services:
-  forgejo:
-    image: codeberg.org/forgejo/forgejo:${FORGEJO_VERSION:-latest}
+  nextcloud:
+    image: nextcloud:${NC_VERSION:-latest}
     restart: unless-stopped
     env_file: .env
     volumes:
-      - ${FORGEJO_APP_ROOT:-/opt/persistent-storage/forgejo/app}:/data
-      - /etc/localtime:/etc/localtime:ro
+      - ${NC_APP_ROOT:-/opt/persistent-storage/nextcloud}:/var/www/html
     networks:
-      - forgejo
+      - nextcloud
     ports:
-      - '3000:3000'
-      - '222:22'
+      - 8080:80
+    depends_on:
+      - redis
+      - postgres
+  redis:
+    image: redis:alpine
+    restart: unless-stopped
   postgres:
     image: ${POSTGRES_IMAGE:-postgres}:${POSTGRES_VERSION:-14}
     restart: unless-stopped
@@ -22,5 +26,6 @@ services:
     networks:
       - forgejo
 
+
 networks:
-  forgejo:
+  nextcloud:

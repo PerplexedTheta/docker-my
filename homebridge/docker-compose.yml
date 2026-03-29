@@ -7,7 +7,7 @@ services:
     network_mode: host
     env_file: .env
     volumes:
-      - ${HOMEBRIDGE_APP_ROOT:-/opt/persistent-storage/homebridge}:/homebridge
+      - ${HOMEBRIDGE_APP_ROOT:-/opt/persistent-storage/homebridge/app}:/homebridge
 
 networks:
   host:
