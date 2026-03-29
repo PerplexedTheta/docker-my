@@ -14,7 +14,7 @@ services:
       - '3000:3000'
       - '222:22'
   postgres:
-    image: postgres:${POSTGRES_VERSION:-14}
+    image: ${POSTGRES_IMAGE:-postgres}:${POSTGRES_VERSION:-14}
     restart: unless-stopped
     env_file: .env
     volumes:
