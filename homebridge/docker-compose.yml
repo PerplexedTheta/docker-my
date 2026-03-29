@@ -4,10 +4,11 @@ services:
   homebridge:
     image: homebridge/homebridge:${HOMEBRIDGE_VERSION:-latest}
     restart: unless-stopped
-    network_mode: host
     env_file: .env
+    user: ${USER_UID:-1000}:${USER_GID:-1000}
     volumes:
       - ${HOMEBRIDGE_APP_ROOT:-/opt/persistent-storage/homebridge/app}:/homebridge
+    network_mode: host
 
 networks:
   host:
