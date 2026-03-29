@@ -9,11 +9,11 @@ services:
     env_file: .env
     user: ${USER_UID:-1000}:${USER_GID:-1000}
     volumes:
-      - ${KC_X509_ROOT:-/opt/persistent-storage/keycloak/app/x509}:/etc/x509/https
+      - ${KC_APP_ROOT:-/opt/persistent-storage/keycloak/app}/x509:/etc/x509/https
     networks:
       - keycloak
     ports:
-      - 8443:8443
+      - ${KC_HTTPS_PORT:-8443}:8443
     depends_on:
       - postgres
   postgres:

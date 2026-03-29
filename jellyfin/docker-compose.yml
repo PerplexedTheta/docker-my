@@ -7,14 +7,14 @@ services:
     env_file: .env
     user: ${USER_UID:-1000}:${USER_GID:-1000}
     volumes:
-      - ${FORGEJO_APP_ROOT:-/opt/persistent-storage/jellyfin/app}/config:/config
-      - ${FORGEJO_APP_ROOT:-/opt/persistent-storage/jellyfin/app}/cache:/cache
-      - ${FORGEJO_MEDIA_ROOT:-/opt/persistent-storage/jellyfin/media}:/mnt/media
+      - ${JELLYFIN_APP_ROOT:-/opt/persistent-storage/jellyfin/app}/config:/config
+      - ${JELLYFIN_APP_ROOT:-/opt/persistent-storage/jellyfin/app}/cache:/cache
+      - ${JELLYFIN_MEDIA_ROOT:-/opt/persistent-storage/jellyfin/media}:/mnt/media
     networks:
       - jellyfin
     ports:
-      - 8096:8096
-      - 7359:7359/udp
+      - ${JELLYFIN_HTTP_PORT:-8096}:8096
+      - ${JELLYFIN_DISCOVERY_PORT:-7359}:7359/udp
 
 networks:
   jellyfin:

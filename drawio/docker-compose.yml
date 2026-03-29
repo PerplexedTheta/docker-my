@@ -9,8 +9,7 @@ services:
     networks:
       - drawio
     ports:
-      - 8080:8080
-      - 8443:8443
+      - ${DRAWIO_HTTP_PORT:-8080}:8080
 
 networks:
   drawio:
