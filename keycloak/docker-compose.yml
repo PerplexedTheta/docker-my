@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:${KC_VERSION:-latest}
+    command:
+      - start
+    restart: unless-stopped
+    env_file: .env
+    user: ${USER_UID:-1000}:${USER_GID:-1000}
+    volumes:
+      - ${KC_X509_ROOT:-/opt/persistent-storage/keycloak/app/x509}:/etc/x509/https
+    networks:
+      - keycloak
+    ports:
+      - 8443:8443
+    depends_on:
+      - postgres
+  postgres:
+    image: ${POSTGRES_IMAGE:-postgres}:${POSTGRES_VERSION:-14}
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ${POSTGRES_APP_ROOT:-/opt/persistent-storage/keycloak/postgres}:/var/lib/postgresql/data
+    networks:
+      - keycloak
+
+networks:
+  keycloak:
