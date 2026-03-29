@@ -5,10 +5,16 @@ services:
     image: homebridge/homebridge:${HOMEBRIDGE_VERSION:-latest}
     restart: unless-stopped
     env_file: .env
-    user: ${USER_UID:-1000}:${USER_GID:-1000}
     volumes:
       - ${HOMEBRIDGE_APP_ROOT:-/opt/persistent-storage/homebridge/app}:/homebridge
     network_mode: host
+
+# on macOS, host networking is a bit busted. To get homebridge to work you'll
+# need to install docker-mac-net-connect.
+# 
+# See https://github.com/chipmk/docker-mac-net-connect
+# > brew install chipmk/tap/docker-mac-net-connect
+# > sudo brew services start chipmk/tap/docker-mac-net-connect
 
 networks:
   host:

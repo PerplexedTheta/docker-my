@@ -16,7 +16,7 @@ services:
       - redis
       - postgres
   redis:
-    image: redis:alpine
+    image: redis
     restart: unless-stopped
     networks:
       - nextcloud
