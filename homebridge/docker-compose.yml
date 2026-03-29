@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  homebridge:
+    image: homebridge/homebridge:${HOMEBRIDGE_VERSION:-latest}
+    restart: unless-stopped
+    network_mode: host
+    env_file: .env
+    volumes:
+      - ${HOMEBRIDGE_APP_ROOT:-/opt/persistent-storage/homebridge}:/homebridge
+
+networks:
+  host:
