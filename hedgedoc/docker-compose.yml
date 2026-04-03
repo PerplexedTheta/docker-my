@@ -7,6 +7,7 @@ services:
     env_file: .env
     user: ${USER_UID:-1000}:${USER_GID:-1000}
     volumes:
+      - ${HEDGEDOC_APP_ROOT:-/opt/persistent-storage/hedgedoc/app}/saml:/hedgedoc/saml
       - ${HEDGEDOC_APP_ROOT:-/opt/persistent-storage/hedgedoc/app}/uploads:/hedgedoc/public/uploads
     networks:
       - hedgedoc
