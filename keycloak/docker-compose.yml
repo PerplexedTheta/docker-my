@@ -12,7 +12,7 @@ services:
     networks:
       - keycloak
     ports:
-      - ${KC_HTTPS_PORT:-8443}:8443
+      - ${KC_HTTPS_PORT:-8443}:${KC_HTTPS_PORT:-8443}
     depends_on:
       - postgres
   postgres:
