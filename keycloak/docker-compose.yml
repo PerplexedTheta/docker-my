@@ -8,6 +8,7 @@ services:
     restart: unless-stopped
     env_file: .env
     volumes:
+      - ${KC_APP_ROOT:-/opt/persistent-storage/keycloak/app}/themes:/opt/keycloak/themes
       - ${KC_APP_ROOT:-/opt/persistent-storage/keycloak/app}/x509:/etc/x509/https
     networks:
       - keycloak
