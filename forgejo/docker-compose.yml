@@ -5,7 +5,6 @@ services:
     image: codeberg.org/forgejo/forgejo:${FORGEJO_VERSION:-latest}
     restart: unless-stopped
     env_file: .env
-    user: ${USER_UID:-1000}:${USER_GID:-1000}
     volumes:
       - ${FORGEJO_APP_ROOT:-/opt/persistent-storage/forgejo/app}:/data
       - /etc/localtime:/etc/localtime:ro
