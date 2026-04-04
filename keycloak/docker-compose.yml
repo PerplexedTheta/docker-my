@@ -7,6 +7,7 @@ services:
       - start
     restart: unless-stopped
     env_file: .env
+    user: ${USER_UID:-1000}:${USER_GID:-1000}
     volumes:
       - ${KC_APP_ROOT:-/opt/persistent-storage/keycloak/app}/themes:/opt/keycloak/themes
       - ${KC_APP_ROOT:-/opt/persistent-storage/keycloak/app}/x509:/etc/x509/https

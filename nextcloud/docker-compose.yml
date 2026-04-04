@@ -2,12 +2,13 @@ version: '3'
 
 services:
   nextcloud:
-    image: nextcloud:${NC_VERSION:-latest}
+    image: nextcloud:${NC_VERSION:-stable-fpm}
     restart: unless-stopped
     env_file: .env
     user: ${USER_UID:-1000}:${USER_GID:-1000}
     volumes:
       - ${NC_APP_ROOT:-/opt/persistent-storage/nextcloud/app}:/var/www/html
+      - ${NC_DATA_ROOT:-/opt/persistent-storage/nextcloud/data}:/var/www/html/data
     networks:
       - nextcloud
     ports:
