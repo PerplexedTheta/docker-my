@@ -9,6 +9,7 @@ services:
     volumes:
       - ${NC_APP_ROOT:-/opt/persistent-storage/nextcloud/app}:/var/www/html
       - ${NC_DATA_ROOT:-/opt/persistent-storage/nextcloud/data}:/var/www/html/data
+      - ${NC_SHARE_ROOT}:/var/www/html/data/shared_area
     networks:
       - nextcloud
     ports:
