@@ -7,7 +7,7 @@ services:
     env_file: .env
     user: ${USER_UID:-1000}:${USER_GID:-1000}
     volumes:
-      - ${JELLYFIN_APP_ROOT:-/opt/persistent-storage/jellyfin/app}/config:/config
+      - ${JELLYFIN_APP_ROOT:-/opt/persistent-storage/jellyfin/app}:/config
       - ${JELLYFIN_APP_ROOT:-/opt/persistent-storage/jellyfin/app}/cache:/cache
       - type: bind
         source: ${JELLYFIN_MEDIA_ROOT:-/opt/persistent-storage/jellyfin/media}
