@@ -9,7 +9,9 @@ services:
     volumes:
       - ${JELLYFIN_APP_ROOT:-/opt/persistent-storage/jellyfin/app}/config:/config
       - ${JELLYFIN_APP_ROOT:-/opt/persistent-storage/jellyfin/app}/cache:/cache
-      - ${JELLYFIN_MEDIA_ROOT:-/opt/persistent-storage/jellyfin/media}:/multimedia
+      - type: bind
+        source: ${JELLYFIN_MEDIA_ROOT:-/opt/persistent-storage/jellyfin/media}
+        target: /multimedia
     networks:
       - jellyfin
     ports:

@@ -8,8 +8,12 @@ services:
     user: ${USER_UID:-1000}:${USER_GID:-1000}
     volumes:
       - ${NC_APP_ROOT:-/opt/persistent-storage/nextcloud/app}:/var/www/html
-      - ${NC_DATA_ROOT:-/opt/persistent-storage/nextcloud/data}:/var/www/html/data
-      - ${NC_SHARE_ROOT}:/var/www/html/data/shared_area
+      - type: bind
+        source: ${NC_DATA_ROOT:-/opt/persistent-storage/nextcloud/data}
+        target: /var/www/html/data
+      - type: bind
+        source: ${NC_SHARE_ROOT}
+        target: /var/www/html/data/shared_area
     networks:
       - nextcloud
     ports:
