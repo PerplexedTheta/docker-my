@@ -10,8 +10,8 @@ services:
     networks:
       - pihole
     ports:
-      - 53:53/tcp
-      - 53:53/udp
+      - ${PIHOLE_DNS_PORT:-53}:53/tcp
+      - ${PIHOLE_DNS_PORT:-53}:53/udp
       - ${PIHOLE_HTTPS_PORT:-8443}:443
       # uncomment below for dhcp support
       #- 67:67/udp
@@ -22,6 +22,16 @@ services:
       #- NET_ADMIN
       # uncomment below for ntp support
       #- SYS_TIME
+    depends_on:
+      - stubby
+  stubby:
+    image: ghcr.io/perplexedtheta/stubby:${STUBBY_VERSION:-latest}
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ${STUBBY_APP_ROOT:-/opt/persistent-storage/pihole/stubby}:/etc/stubby
+    networks:
+      - pihole
 
 
 networks:
