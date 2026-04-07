@@ -2,6 +2,11 @@
 	tls internal
 	root * /var/www/html
 
+	log {
+		output file /data/caddy.log
+		format json
+	}
+
 	@forbidden {
 		path /.htaccess
 		path /.xml
