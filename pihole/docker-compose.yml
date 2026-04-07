@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  pihole:
+    image: pihole/pihole:${PIHOLE_VERSION:-latest}
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ${PIHOLE_APP_ROOT:-/opt/persistent-storage/pihole/app}:/etc/pihole
+    networks:
+      - pihole
+    ports:
+      - 53:53/tcp
+      - 53:53/udp
+      - ${PIHOLE_HTTPS_PORT:-8443}:443
+      # uncomment below for dhcp support
+      #- 67:67/udp
+      # uncomment below for ntp support
+      #- 123:123/udp
+    #cap_add:
+      # uncomment below for dhcp support
+      #- NET_ADMIN
+      # uncomment below for ntp support
+      #- SYS_TIME
+
+
+networks:
+  pihole:
