@@ -28,3 +28,4 @@ services:
 
 networks:
   keycloak:
+    enable_ipv6: true

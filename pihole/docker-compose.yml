@@ -36,3 +36,4 @@ services:
 
 networks:
   pihole:
+    enable_ipv6: true

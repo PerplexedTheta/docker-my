@@ -20,3 +20,4 @@ services:
 
 networks:
   jellyfin:
+    enable_ipv6: true

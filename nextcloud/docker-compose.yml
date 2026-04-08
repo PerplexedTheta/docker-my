@@ -60,3 +60,4 @@ services:
 
 networks:
   nextcloud:
+    enable_ipv6: true

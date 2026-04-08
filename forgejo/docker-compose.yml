@@ -26,3 +26,4 @@ services:
 
 networks:
   forgejo:
+    enable_ipv6: true
