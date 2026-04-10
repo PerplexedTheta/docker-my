@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  p4:
+    image: ghcr.io/perplexedtheta/p4:${P4_VERSION:-latest}
+    restart: unless-stopped
+    env_file: .env
+    user: ${USER_UID:-1000}:${USER_GID:-1000}
+    volumes:
+      - ${P4_APP_ROOT:-/opt/persistent-storage/p4/app}:/opt/p4d
+    networks:
+      - p4
+    ports:
+      - ${P4_APP_PORT:-1666}:1666
+
+
+networks:
+  p4:
+    enable_ipv6: true
