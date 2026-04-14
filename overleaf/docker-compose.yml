@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+  overleaf:
+    image: sharelatex/sharelatex:${OVERLEAF_VERSION:-latest}
+    restart: unless-stopped
+    env_file: .env
+    stop_grace_period: 60s
+    volumes:
+      - ${OVERLEAF_APP_ROOT:-/opt/persistent-storage/overleaf/app}:/var/lib/overleaf
+    networks:
+      - sharelatex
+    ports:
+      - ${OVERLEAF_HTTP_PORT:-8080}:80
+    depends_on:
+      redis:
+        condition: service_started
+      mongo:
+        condition: service_healthy
+  redis:
+    image: redis:${REDIS_VERSION:-7.4}
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ${MONGO_APP_ROOT:-/opt/persistent-storage/overleaf/redis}:/data
+    networks:
+      - sharelatex
+  mongo:
+    image: mongo:${MONGO_VERSION:-8.0}
+    restart: unless-stopped
+    env_file: .env
+    command: "--replSet overleaf"
+    volumes:
+      - ${MONGO_APP_ROOT:-/opt/persistent-storage/overleaf/mongo}:/data/db
+      - ./mongo/mongodb-init-replica-set.js:/docker-entrypoint-initdb.d/mongodb-init-replica-set.js
+    extra_hosts:
+      - mongo:127.0.0.1
+    healthcheck:
+      test: echo 'db.stats().ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    networks:
+      - sharelatex
+
+
+networks:
+  sharelatex:
+    enable_ipv6: true
