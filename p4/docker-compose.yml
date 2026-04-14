@@ -8,6 +8,7 @@ services:
     user: ${USER_UID:-1000}:${USER_GID:-1000}
     volumes:
       - ${P4_APP_ROOT:-/opt/persistent-storage/p4/app}:/opt/p4d
+      - ${P4_DATA_ROOT:-/opt/persistent-storage/p4/app/depot}:/opt/p4d/depot
     networks:
       - p4
     ports:
