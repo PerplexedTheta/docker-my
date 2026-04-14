@@ -2,7 +2,7 @@ version: '3'
 
 services:
   nextcloud:
-    image: nextcloud:${NC_VERSION:-stable-fpm}
+    image: nextcloud:${NC_VERSION:-stable}
     restart: unless-stopped
     env_file: .env
     user: ${USER_UID:-1000}:${USER_GID:-1000}
@@ -17,32 +17,10 @@ services:
     networks:
       - nextcloud
     ports:
-      - ${NC_FPM_PORT:-9000}:9000
+      - ${NC_HTTP_PORT:-8080}:80
     depends_on:
-      - caddy
       - postgres
       - redis
-  caddy:
-    image: caddy:latest
-    restart: unless-stopped
-    env_file: .env
-    user: ${USER_UID:-1000}:${USER_GID:-1000}
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ${CADDY_APP_ROOT:-/opt/persistent-storage/nextcloud/caddy}/config/Caddyfile:/etc/caddy/Caddyfile
-      - ${CADDY_APP_ROOT:-/opt/persistent-storage/nextcloud/caddy}/data:/data
-      - ${CADDY_APP_ROOT:-/opt/persistent-storage/nextcloud/caddy}/config:/config
-      - ${NC_APP_ROOT:-/opt/persistent-storage/nextcloud/app}:/var/www/html
-      - type: bind
-        source: ${NC_DATA_ROOT:-/opt/persistent-storage/nextcloud/data}
-        target: /var/www/html/data
-      - type: bind
-        source: ${NC_SHARE_ROOT}
-        target: /var/www/html/data/shared_area
-    networks:
-      - nextcloud
-    ports:
-      - ${CADDY_HTTPS_PORT:-8443}:443
   redis:
     image: redis
     restart: unless-stopped
