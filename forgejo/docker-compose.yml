@@ -7,6 +7,7 @@ services:
     env_file: .env
     volumes:
       - ${FORGEJO_APP_ROOT:-/opt/persistent-storage/forgejo/app}:/data
+      - ${FORGEJO_GIT_ROOT:-/opt/persistent-storage/forgejo/app/git}:/data/git
       - /etc/localtime:/etc/localtime:ro
     networks:
       - forgejo
