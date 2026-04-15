@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  garrysmod:
+    image: ghcr.io/perplexedtheta/srcds:${SRCDS_VERSION:-latest}
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ${SRCDS_APP_ROOT:-/opt/persistent-storage/garrysmod/app}:/srcds
+    networks:
+      - garrysmod
+    ports:
+      - ${SRCDS_APP_PORT:-27015}:27015/udp
+      - ${SRCDS_RCON_PORT:-27015}:27015/tcp
+
+
+networks:
+  garrysmod:
+    enable_ipv6: true
