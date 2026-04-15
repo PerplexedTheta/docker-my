@@ -9,7 +9,7 @@ services:
     networks:
       - tiger
     ports:
-      - ${MOJO_PORT:-8080}:8080
+      - ${TIGER_HTTP_PORT:-8080}:8080
 
 networks:
   tiger:
