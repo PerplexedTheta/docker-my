@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  hl2mp:
+    image: ghcr.io/perplexedtheta/srcds:${SRCDS_VERSION:-latest}
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ${SRCDS_APP_ROOT:-/opt/persistent-storage/hl2mp/app}:/srcds
+    networks:
+      - hl2mp
+    ports:
+      - ${SRCDS_APP_PORT:-27016}:27016/udp
+      - ${SRCDS_RCON_PORT:-27016}:27016/tcp
+    tty: true
+
+
+networks:
+  hl2mp:
+    enable_ipv6: true
