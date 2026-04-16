@@ -23,7 +23,8 @@ services:
       # uncomment below for ntp support
       #- SYS_TIME
     depends_on:
-      - stubby
+      stubby:
+        condition: service_healthy
   stubby:
     image: ghcr.io/perplexedtheta/stubby:${STUBBY_VERSION:-latest}
     restart: unless-stopped
