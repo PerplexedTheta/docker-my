@@ -12,6 +12,7 @@ services:
     ports:
       - ${SRCDS_APP_PORT:-27015}:27015/udp
       - ${SRCDS_RCON_PORT:-27015}:27015/tcp
+    tty: true
 
 
 networks:
