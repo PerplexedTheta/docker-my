@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  ts3server:
+    image: ghcr.io/perplexedtheta/ts3server:${TS3SERVER_VERSION:-latest}
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ${TS3SERVER_APP_ROOT:-/opt/persistent-storage/ts3server/app}:/ts3server
+    networks:
+      - ts3server
+    ports:
+      - ${TS3SERVER_APP_PORT:-9987}:9987/udp
+      - ${TS3SERVER_TEL_PORT:-10011}:10011
+      - ${TS3SERVER_SSH_PORT:-10022}:10022
+    tty: true
+
+
+networks:
+  ts3server:
+    enable_ipv6: true
