@@ -8,6 +8,7 @@ services:
     volumes:
       - ${FORGEJO_APP_ROOT:-/opt/persistent-storage/forgejo/app}:/data
       - ${FORGEJO_GIT_ROOT:-/opt/persistent-storage/forgejo/app/git}:/data/git
+      - ${FORGEJO_PKG_ROOT:-/opt/persistent-storage/forgejo/app/gitea/packages}:/data/gitea/packages
       - /etc/localtime:/etc/localtime:ro
     networks:
       - forgejo
