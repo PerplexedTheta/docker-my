@@ -2,7 +2,7 @@ version: '3'
 
 services:
   forgejo:
-    image: codeberg.org/forgejo/forgejo:${FORGEJO_VERSION:-latest}
+    image: codeberg.org/forgejo/forgejo:${FORGEJO_VERSION:-15}
     restart: unless-stopped
     env_file: .env
     volumes:
