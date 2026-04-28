@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  mcserver:
+    image: ghcr.io/perplexedtheta/mcserver:${MCSERVER_VERSION:-latest}
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ${MCSERVER_APP_ROOT:-/opt/persistent-storage/mcserver/app}:/mcserver
+    networks:
+      - mcserver
+    ports:
+      - ${MCSERVER_APP_PORT:-25565}:25565/tcp
+      - ${MCSERVER_QPT_PORT:-25575}:25575/udp
+      - ${MCSERVER_RCON_PORT:-25585}:25585/tcp
+    tty: true
+
+
+networks:
+  mcserver:
+    enable_ipv6: true
