@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  caddy:
+    image: caddy:${CADDY_VERSION:-latest}
+    restart: unless-stopped
+    env_file: .env
+    user: ${USER_UID:-1000}:${USER_GID:-1000}
+    volumes:
+      - ${CADDY_APP_ROOT:-/opt/persistent-storage/caddy/app/site}:/srv
+      - ${CADDY_CONF_ROOT:-/opt/persistent-storage/caddy/app/conf}:/etc/caddy
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - caddy
+    ports:
+      - ${CADDY_HTTP_PORT:-80}:80/tcp
+      - ${CADDY_HTTPS_PORT:-443}:443/tcp
+      - ${CADDY_HTTPS_PORT:-443}:443/udp
+    extra_hosts:
+      - host.docker.internal:host-gateway
+
+volumes:
+  caddy_data:
+  caddy_config:
+
+networks:
+  caddy:
+    enable_ipv6: true
