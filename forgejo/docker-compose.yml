@@ -18,11 +18,11 @@ services:
     depends_on:
       - postgres
   postgres:
-    image: ${POSTGRES_IMAGE:-postgres}:${POSTGRES_VERSION:-14}
+    image: ${POSTGRES_IMAGE:-postgres}:${POSTGRES_VERSION:-18}
     restart: unless-stopped
     env_file: .env
     volumes:
-      - ${POSTGRES_APP_ROOT:-/opt/persistent-storage/forgejo/postgres}:/var/lib/postgresql/data
+      - ${POSTGRES_APP_ROOT:-/opt/persistent-storage/forgejo/postgres}:/var/lib/postgresql
     networks:
       - forgejo
 
