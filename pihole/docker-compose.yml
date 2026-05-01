@@ -23,14 +23,13 @@ services:
       # uncomment below for ntp support
       #- SYS_TIME
     depends_on:
-      stubby:
-        condition: service_healthy
-  stubby:
-    image: ghcr.io/perplexedtheta/stubby:${STUBBY_VERSION:-latest}
+      - dnscrypt-proxy
+  dnscrypt-proxy:
+    image: klutchell/dnscrypt-proxy
     restart: unless-stopped
     env_file: .env
     volumes:
-      - ${STUBBY_APP_ROOT:-/opt/persistent-storage/pihole/stubby}:/etc/stubby
+      - ${DNSCRYPT_PROXY_APP_ROOT:-/opt/persistent-storage/pihole/dnscrypt-proxy}:/config
     networks:
       - pihole
 
