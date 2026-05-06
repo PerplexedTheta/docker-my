@@ -7,7 +7,9 @@ services:
     env_file: .env
     user: ${USER_UID:-1000}:${USER_GID:-1000}
     volumes:
-      - ${CADDY_APP_ROOT:-/opt/persistent-storage/caddy/app/site}:/srv
+      - type: bind
+        source: ${CADDY_APP_ROOT:-/opt/persistent-storage/caddy/app/site}
+        target: /srv
       - ${CADDY_CONF_ROOT:-/opt/persistent-storage/caddy/app/conf}:/etc/caddy
       - caddy_data:/data
       - caddy_config:/config
