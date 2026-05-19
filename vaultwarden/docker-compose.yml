@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  vaultwarden:
+    image: vaultwarden/server:${VAULTWARDEN_VERSION:-latest}
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ${VAULTWARDEN_APP_ROOT:-/opt/persistent-storage/vaultwarden/app}:/data
+    networks:
+      - vaultwarden
+    ports:
+      - ${VAULTWARDEN_HTTP_PORT:-8080}:80
+    depends_on:
+      - postgres
+
+  postgres:
+    image: ${POSTGRES_IMAGE:-postgres}:${POSTGRES_VERSION:-18}
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ${POSTGRES_APP_ROOT:-/opt/persistent-storage/vaultwarden/postgres}:/var/lib/postgresql
+    networks:
+      - vaultwarden
+
+networks:
+  vaultwarden:
+    enable_ipv6: true
